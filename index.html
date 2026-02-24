@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semillero de Talento — Price Shoes</title>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --navy:    #23395e;
+  --pink:    #ea008a;
+  --indigo:  #4032cb;
+  --violet:  #8b4cba;
+  --white:   #ffffff;
+  --lime:    #a8d249;
+  --blue:    #233dff;
+  --yellow:  #f8dd4e;
+  --ink:     #202020;
+  --gray:    #f4f5f7;
+  --gray2:   #e8eaed;
+  --muted:   #7a8099;
+  --border:  #e2e5ec;
+
+  /* Area colors */
+  --rh:      #ea008a;
+  --fin:     #4032cb;
+  --com:     #8b4cba;
+  --adm:     #233dff;
+  --ti:      #a8d249;
+  --mkt:     #f8dd4e;
+  --otro:    #23395e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lexend', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ─── HEADER ─────────────────────────────────────────────── */
+header {
+  background: var(--navy);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(35,57,94,.25);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-dot {
+  width: 36px; height: 36px;
+  background: var(--pink);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: .85rem;
+  color: #fff;
+  letter-spacing: -.02em;
+  flex-shrink: 0;
+}
+.brand-text .sup {
+  font-family: 'Lexend', sans-serif;
+  font-size: .62rem;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  display: block;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.brand-text h1 {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff;
+  letter-spacing: -.01em;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sync-info {
+  font-size: .7rem;
+  color: rgba(255,255,255,.45);
+}
+.btn-sync {
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 6px;
+  color: rgba(255,255,255,.8);
+  font-family: 'Lexend', sans-serif;
+  font-size: .78rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: .2s;
+}
+.btn-sync:hover { border-color: var(--pink); color: #fff; }
+.btn-sync svg { transition: .3s; }
+.btn-sync.loading svg { animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── CONFIG BAR ─────────────────────────────────────────── */
+#configBar {
+  background: #fffbea;
+  border-bottom: 2px solid var(--yellow);
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+#configBar label {
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+#sheetInput {
+  flex: 1;
+  min-width: 300px;
+  padding: 7px 12px;
+  border: 1px solid #d0c060;
+  border-radius: 6px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .78rem;
+  outline: none;
+  background: #fff;
+}
+#sheetInput:focus { border-color: var(--indigo); }
+.btn-yellow {
+  padding: 7px 16px;
+  background: var(--yellow);
+  border: none;
+  border-radius: 6px;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: .75rem;
+  cursor: pointer;
+  color: var(--ink);
+  transition: .15s;
+}
+.btn-yellow:hover { background: #e8cc38; }
+.btn-hide {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .72rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+/* ─── STATS BAR ──────────────────────────────────────────── */
+.stats-bar {
+  background: var(--navy);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+}
+.stat {
+  padding: 16px 28px;
+  border-right: 1px solid rgba(255,255,255,.08);
+  flex-shrink: 0;
+  text-align: center;
+}
+.stat:first-child { padding-left: 0; }
+.stat-n {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+  line-height: 1;
+}
+.stat-n sup { font-size: .9rem; color: var(--yellow); }
+.stat-l {
+  font-size: .6rem;
+  color: rgba(255,255,255,.45);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-top: 3px;
+}
+.area-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 16px 28px;
+  flex: 1;
+}
+.apill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  opacity: .9;
+}
+
+/* ─── TOOLBAR ────────────────────────────────────────────── */
+.toolbar {
+  padding: 16px 40px;
+  background: var(--gray);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+.search-box input {
+  width: 100%;
+  padding: 9px 14px 9px 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .82rem;
+  background: var(--white);
+  outline: none;
+  transition: border-color .2s;
+  color: var(--ink);
+}
+.search-box input:focus { border-color: var(--indigo); }
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: .85rem;
+  pointer-events: none;
+}
+.filter-sel {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .78rem;
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+}
+.filter-sel:focus { border-color: var(--indigo); }
+.count-label {
+  margin-left: auto;
+  font-size: .75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.count-label strong { color: var(--ink); }
+
+/* ─── GRID ───────────────────────────────────────────────── */
+.grid {
+  padding: 32px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ─── CARD ───────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform .22s, box-shadow .22s;
+  animation: fadeUp .4s ease both;
+  position: relative;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(35,57,94,.12);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card top strip + avatar */
+.card-hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+/* Thin colored left accent bar */
+.card-strip {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  border-radius: 16px 0 0 0;
+}
+.card-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2.5px solid var(--white);
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  flex-shrink: 0;
+  background: var(--gray2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  overflow: hidden;
+  margin-left: 6px;
+}
+.card-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.card-name-block {
+  flex: 1;
+  min-width: 0;
+}
+.card-name-block h3 {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: .92rem;
+  color: var(--ink);
+  line-height: 1.3;
+  white-space: normal;
+  word-break: break-word;
+}
+.card-name-block .card-sub {
+  font-size: .7rem;
+  color: var(--muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Eval badge top-right */
+.eval-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 2;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.eval-badge.evaluated {
+  background: rgba(168,210,73,.18);
+  color: #4a7a00;
+  border: 1px solid rgba(168,210,73,.5);
+}
+.eval-badge.not-evaluated {
+  background: rgba(122,128,153,.1);
+  color: var(--muted);
+  border: 1px solid rgba(122,128,153,.2);
+}
+
+.card-body { padding: 12px 16px 8px; }
+
+/* Area tag */
+.area-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .67rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* Info grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+.info-item .il {
+  font-size: .6rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted);
+  margin-bottom: 1px;
+}
+.info-item .iv {
+  font-size: .78rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+/* Score bar */
+.score-row {
+  margin-bottom: 10px;
+}
+.score-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: .65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.score-label strong { color: var(--ink); font-weight: 600; }
+.score-track {
+  height: 5px;
+  background: var(--gray2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .8s ease;
+}
+
+/* Disp badges */
+.disp-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.dbadge {
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .03em;
+}
+.dbadge.green { background: rgba(168,210,73,.15); color: #4a7a00; border: 1px solid rgba(168,210,73,.4); }
+.dbadge.blue  { background: rgba(64,50,203,.08);  color: var(--indigo); border: 1px solid rgba(64,50,203,.2); }
+.dbadge.pink  { background: rgba(234,0,138,.08);  color: var(--pink); border: 1px solid rgba(234,0,138,.2); }
+.dbadge.gray  { background: var(--gray); color: var(--muted); border: 1px solid var(--border); }
+
+/* Card footer */
+.card-footer {
+  padding: 10px 16px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+.titulacion-chip {
+  font-size: .65rem;
+  color: var(--muted);
+  background: var(--gray);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.action-btns {
+  display: flex;
+  gap: 6px;
+}
+.abn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .15s;
+  text-decoration: none;
+  font-size: .85rem;
+}
+.abn:hover { transform: scale(1.1); }
+.abn.wa:hover  { background: #25d366; border-color: #25d366; }
+.abn.mail:hover { background: var(--pink); border-color: var(--pink); }
+.abn.li:hover  { background: #0077b5; border-color: #0077b5; }
+.abn.profile:hover { background: var(--navy); border-color: var(--navy); }
+.abn.cv:hover { background: var(--violet); border-color: var(--violet); color: #fff; }
+.abn svg { width: 15px; height: 15px; }
+
+/* ─── EMPTY STATE ────────────────────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--muted);
+}
+.empty-state .ei { font-size: 3rem; opacity: .25; margin-bottom: 12px; }
+.empty-state p { font-size: .9rem; }
+
+/* ─── MODAL ──────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(35,57,94,.6);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+  backdrop-filter: blur(4px);
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--white);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(35,57,94,.25);
+}
+.modal-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  background: var(--gray);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: .85rem;
+  z-index: 10;
+  transition: .15s;
+}
+.modal-close:hover { background: var(--pink); color: #fff; }
+
+/* Modal hero */
+.modal-hero {
+  height: 88px;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+}
+.modal-avatar {
+  position: absolute;
+  bottom: -32px;
+  left: 28px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 4px solid var(--white);
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  background: var(--gray2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  overflow: hidden;
+}
+.modal-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.modal-body { padding: 44px 28px 28px; }
+.modal-title h2 {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--ink);
+}
+.modal-title .msub {
+  font-size: .82rem;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.modal-badges {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 18px;
+}
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.ma-btn {
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .8rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: .15s;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+}
+.ma-btn.wa    { background: #25d366; color: #fff; }
+.ma-btn.mail  { background: var(--pink); color: #fff; }
+.ma-btn.li    { background: #0077b5; color: #fff; border: none; }
+.ma-btn.cv    { background: var(--violet); color: #fff; border: none; }
+.ma-btn.close { background: var(--gray); color: var(--ink); border-color: var(--border); }
+.ma-btn:hover { opacity: .88; }
+
+/* Sections inside modal */
+.msec {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: var(--muted);
+  margin-top: 22px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.di .dl {
+  font-size: .62rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.di .dv {
+  font-size: .85rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+.note-card {
+  background: var(--gray);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: .84rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.note-card.green { border-left: 3px solid var(--lime); }
+.note-card.pink  { border-left: 3px solid var(--pink); }
+
+/* Competencias radar / bars */
+.comp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.comp-row { }
+.comp-name {
+  font-size: .72rem;
+  color: var(--ink);
+  margin-bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+.comp-name span { font-weight: 600; }
+.comp-track {
+  height: 6px;
+  background: var(--gray2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.comp-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .9s ease;
+}
+
+/* Radar chart canvas */
+.radar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  header, .toolbar, .grid { padding-left: 16px; padding-right: 16px; }
+  .stats-bar { padding: 0 16px; }
+  .detail-grid { grid-template-columns: 1fr 1fr; }
+  .comp-grid { grid-template-columns: 1fr; }
+  #configBar { padding: 10px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="brand">
+    <div class="brand-dot">PS</div>
+    <div class="brand-text">
+      <span class="sup">Price Shoes · Programa de Becarios</span>
+      <h1>🌱 Semillero de Talento</h1>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="sync-info" id="syncInfo" style="color:rgba(255,255,255,.45);font-size:.7rem"></span>
+  </div>
+</header>
+
+<!-- ── CONFIG BAR ── -->
+<div id="configBar" style="display:none">
+  <label>🔗 ID del Google Sheet:</label>
+  <input id="sheetInput" placeholder="Ej: 1GXHmtMYdLYfCS07B3xwY9moazs_6j0LetZThF5q0GZg" oninput="saveId()">
+  <button class="btn-yellow" onclick="syncSheet()">⟳ Conectar y sincronizar</button>
+  <button class="btn-hide" onclick="toggleConfig()">Ocultar</button>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-n" id="sTotal">9</div><div class="stat-l">Registros</div></div>
+  <div class="stat"><div class="stat-n" id="sEval">3</div><div class="stat-l">Evaluados</div></div>
+  <div class="stat"><div class="stat-n" id="sDisp">6</div><div class="stat-l">Disponibles</div></div>
+  <div class="stat"><div class="stat-n" id="sTit">5</div><div class="stat-l">Titulados/trámite</div></div>
+  <div class="stat"><div class="stat-n" id="sSedes">7</div><div class="stat-l">Sedes</div></div>
+  <div class="area-pills" id="areaPills"></div>
+</div>
+
+<!-- ── TOOLBAR ── -->
+<div class="toolbar">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input id="searchInput" placeholder="Buscar por nombre, área, sede, universidad..." oninput="applyFilters()">
+  </div>
+  <select class="filter-sel" id="fArea" onchange="applyFilters()">
+    <option value="">Todas las áreas</option>
+  </select>
+  <select class="filter-sel" id="fSede" onchange="applyFilters()">
+    <option value="">Todas las sedes</option>
+  </select>
+  <select class="filter-sel" id="fTit" onchange="applyFilters()">
+    <option value="">Titulación</option>
+    <option>Titulado</option><option>En trámite</option><option>Pasante</option>
+  </select>
+  <select class="filter-sel" id="fEval" onchange="applyFilters()">
+    <option value="">Evaluación</option>
+    <option value="si">Evaluados</option>
+    <option value="no">Sin evaluar</option>
+  </select>
+  <span class="count-label" id="countLabel"><strong>9</strong> becarios</span>
+</div>
+
+<!-- ── GRID ── -->
+<div class="grid" id="mainGrid"></div>
+
+<!-- ── MODAL ── -->
+<div class="overlay" id="detailOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-hero" id="modalHero"></div>
+    <div class="modal-avatar" id="modalAvatar"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+//  PALETA POR ÁREA
+// ══════════════════════════════════════════════════
+const AREA_PAL = {
+  'Recursos Humanos':           { bg:'#fce8f5', text:'#b5006a', strip:'#ea008a', fill:'#ea008a' },
+  'Finanzas':                   { bg:'#ebe9fb', text:'#2a1fa0', strip:'#4032cb', fill:'#4032cb' },
+  'Comercio Internacional':     { bg:'#f2ecfb', text:'#5c2e8a', strip:'#8b4cba', fill:'#8b4cba' },
+  'Administración':             { bg:'#e8ecff', text:'#1228c0', strip:'#233dff', fill:'#233dff' },
+  'Tecnologías de la Información':{ bg:'#f3fae0', text:'#3d5e00', strip:'#a8d249', fill:'#a8d249' },
+  'Mercadotecnia':              { bg:'#fffbe0', text:'#7a6200', strip:'#f8dd4e', fill:'#e8c800' },
+};
+function apal(area){ return AREA_PAL[area] || { bg:'#e8ecf2', text:'#23395e', strip:'#23395e', fill:'#23395e' }; }
+function initials(n){ return (n||'').split(' ').slice(0,2).map(x=>x[0]||'').join('').toUpperCase(); }
+function scoreColor(s){ if(s>=4) return '#a8d249'; if(s>=3) return '#f8dd4e'; return '#ea008a'; }
+function pct(val,max){ return Math.min(100, Math.round(val/max*100)); }
+
+// ══════════════════════════════════════════════════
+//  SHEET CONFIG
+// ══════════════════════════════════════════════════
+let SHEET_ID = localStorage.getItem('psSheetId') || '1OB2Jsrp9nTOGI-UTIgPbIXl8Fes8L-mTOl8b1qj4CO4';
+const SHEET_SEMILLERO  = 'Solicitud';
+const SHEET_EVAL       = 'Evaluaciones';
+
+function saveId(){
+  SHEET_ID = document.getElementById('sheetInput').value.trim();
+  localStorage.setItem('psSheetId', SHEET_ID);
+}
+function toggleConfig(){
+  const b = document.getElementById('configBar');
+  b.style.display = b.style.display === 'none' ? 'flex' : 'none';
+}
+window.onload = () => {
+  document.getElementById('sheetInput').value = SHEET_ID;
+  data = [...SAMPLE];
+  evals = {...SAMPLE_EVALS};
+  renderAll();
+  // Sincronizar al cargar y cada 5 minutos automáticamente
+  syncSheet();
+  setInterval(syncSheet, 5 * 60 * 1000);
+};
+
+// ══════════════════════════════════════════════════
+//  SYNC desde Google Sheets (CSV público)
+// ══════════════════════════════════════════════════
+async function syncSheet(){
+  if(!SHEET_ID){ return; }
+  const btn = document.getElementById('syncBtn');
+  if(btn) btn.classList.add('loading');
+  try {
+    const urlS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_SEMILLERO)}`;
+    const rS = await fetch(urlS);
+    if(rS.ok){
+      const bytes = await rS.arrayBuffer();
+      const csv = new TextDecoder('utf-8').decode(bytes);
+      const parsed = parseSemilleroCSV(csv);
+      if(parsed.length){ data = parsed; }
+    }
+    const urlE = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_EVAL)}`;
+    const rE = await fetch(urlE);
+    if(rE.ok){
+      const bytes = await rE.arrayBuffer();
+      const csv = new TextDecoder('utf-8').decode(bytes);
+      evals = parseEvalsCSV(csv);
+    }
+    document.getElementById('syncInfo').textContent = 'Actualizado ' + new Date().toLocaleTimeString('es-MX');
+    renderAll();
+  } catch(e){
+    console.log('Error sync:', e.message);
+  } finally { if(btn) btn.classList.remove('loading'); }
+}
+
+// ══════════════════════════════════════════════════
+//  CSV PARSERS
+// ══════════════════════════════════════════════════
+function parseCSV(csv){
+  const text = (csv || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const rows = [];
+  let row = [];
+  let cur = '';
+  let i = 0;
+  let inQuotes = false;
+
+  while(i < text.length){
+    const ch = text[i];
+    if(ch === '"'){
+      if(inQuotes && text[i + 1] === '"'){ cur += '"'; i += 2; continue; }
+      inQuotes = !inQuotes;
+      i++;
+      continue;
+    }
+    if(ch === ',' && !inQuotes){
+      row.push(cur.trim());
+      cur = '';
+      i++;
+      continue;
+    }
+    if(ch === '\n' && !inQuotes){
+      row.push(cur.trim());
+      if(row.some(v => v !== '')) rows.push(row);
+      row = [];
+      cur = '';
+      i++;
+      continue;
+    }
+    cur += ch;
+    i++;
+  }
+
+  row.push(cur.trim());
+  if(row.some(v => v !== '')) rows.push(row);
+  return rows;
+}
+
+function csvToObjs(csv){
+  const rows = parseCSV(csv);
+  if(rows.length < 2) return [];
+  const headers = rows[0].map(h => h.trim());
+  return rows.slice(1).map(cols=>{
+    const o={};
+    headers.forEach((h,i)=>o[h]=cols[i]||'');
+    return o;
+  });
+}
+
+function extractDriveId(raw){
+  const txt = (raw || '').toString();
+  const matches = [
+    txt.match(/[?&]id=([a-zA-Z0-9_-]{20,})/),
+    txt.match(/\/d\/([a-zA-Z0-9_-]{20,})/),
+    txt.match(/^([a-zA-Z0-9_-]{20,})$/),
+  ].filter(Boolean);
+  return matches.length ? matches[0][1] : '';
+}
+
+function sanitizeUrl(url, allowedProtocols=['http:', 'https:', 'mailto:']){
+  try {
+    const parsed = new URL(url, window.location.origin);
+    return allowedProtocols.includes(parsed.protocol) ? parsed.href : '#';
+  } catch (_) {
+    return '#';
+  }
+}
+
+function escapeHtml(val){
+  return (val ?? '').toString()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+const COMPETENCY_MAP = {
+  comunicacion:  ['expresa ideas','comunica oralmente','escucha activ','transmite ideas','comunicacion'],
+  equipo:        ['colabora eficaz','participa proactiv','actitud respetuosa','trabajo en equipo','colabora'],
+  liderazgo:     ['muestra iniciativa','motiva a otros','es un referente','liderazgo','autogestion'],
+  problemas:     ['identifica rapidamente','propone soluciones','analiza las situaciones','resolucion de problemas','problema'],
+  adaptabilidad: ['se adapta con facilidad','aprende rapidamente nuevas','muestra disposicion','adaptabilidad','aprendizaje'],
+  emocional:     ['maneja el estres','reconoce y gestiona','demuestra empatia','inteligencia emocional','emocional'],
+  organizacion:  ['planifica su trabajo','entrega las tareas','utiliza su tiempo','organizacion','tiempo'],
+  creatividad:   ['genera ideas originales','sugiere alternativas','abierto a experimentar','creatividad','innovacion'],
+  resiliencia:   ['mantiene la calma','se recupera rapidamente','persiste en las tareas','resiliencia'],
+  compromiso:    ['sentido de responsabilidad','toma la iniciativa','se identifica','compromiso','proactividad'],
+  tecnico:       ['transformar datos','comparte proactivamente su conocimiento','utiliza los errores','conocimiento tecnico','tecnico'],
+};
+
+function normalizeText(s){
+  return (s || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+
+function normalizeNomina(v){
+  return (v || '').toString().trim().toUpperCase().replace(/\s+/g, '');
+}
+
+function parseSemilleroCSV(csv){
+  const rows = csvToObjs(csv);
+  return rows.filter(r => getCol(r, 'Nombre Completo (Exactamente')).map(r=>{
+    const fotoRaw = getCol(r, 'Sube tu Foto') || '';
+    let fotoUrl = '';
+    const id = extractDriveId(fotoRaw);
+    if(id){
+      fotoUrl = `https://drive.google.com/thumbnail?id=${id}&sz=w200-h200`;
+    }
+    return {
+      nombre:          getCol(r, 'Nombre Completo (Exactamente')||'',
+      nomina:          getCol(r, 'Nómina (Esta en tu credencial')||'',
+      genero:          getCol(r, 'Género')||'',
+      email:           getCol(r, 'Correo Electrónico Personal')||'',
+      telefono:        getCol(r, 'Teléfono Celular')||'',
+      linkedin:        getCol(r, 'Linkedin')||'',
+      foto:            fotoUrl,
+      universidad:     getCol(r, 'Universidad;')||getCol(r, 'Universidad')||'',
+      carrera:         getCol(r, 'Carrera')||'',
+      ingreso:         getCol(r, 'Fecha de ingreso en Price')||'',
+      termino:         getCol(r, 'Fecha de fecha de término')||getCol(r, 'término esperada')||'',
+      unidad:          getCol(r, 'Unidad de Negocio donde')||'',
+      area:            getCol(r, 'Área o Departamento actual')||'',
+      jefe:            getCol(r, 'Nombre completo de tu Jefe')||'',
+      logros:          getCol(r, 'Resumen de Logros')||'',
+      herramientas:    getCol(r, 'Herramienta:')||'',
+      habilidadTec:    getCol(r, 'Habilidad Técnica (Hard Skill)')||'',
+      habilidadBlanda: getCol(r, 'Habilidad Blanda (Soft Skill)')||'',
+      valorAgregado:   getCol(r, 'Valor Agregado')||'',
+      jefeSabe:        getCol(r, 'jefe directo actual sabe')||'',
+      fortalezas:      getCol(r, 'Habilidades resaltadas por tu jefe')||'',
+      oportunidades:   getCol(r, 'Áreas de oportunidad o desarrollo')||'',
+      areasInteres:    getCol(r, 'Áreas de interés prioritarias')||'',
+      dispJornada:     getCol(r, 'disponibilidad de tiempo para una Jornada')||'',
+      dispTraslado:    getCol(r, 'disponibilidad para traslado')||'',
+      titulacion:      getCol(r, 'Estatus de Titulación')||'',
+      acepta:          getCol(r, 'Aceptación de aviso')||'',
+      cv:              (() => {
+                         const raw = getCol(r, 'Sube tu CV')||'';
+                         const id  = extractDriveId(raw);
+                         return id ? `https://drive.google.com/file/d/${id}/view` : (raw.startsWith('http') ? raw : '');
+                       })(),
+    };
+  });
+}
+
+// Búsqueda por inicio de clave, normalizando acentos
+function getCol(obj, keyword){
+  const normalize = s => s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ').trim();
+  const kw = normalize(keyword);
+  for(const key of Object.keys(obj)){
+    if(normalize(key).startsWith(kw)){
+      const v = obj[key];
+      if(v !== undefined && v !== '') return v;
+    }
+  }
+  for(const key of Object.keys(obj)){
+    if(normalize(key).includes(kw)){
+      const v = obj[key];
+      if(v !== undefined && v !== '') return v;
+    }
+  }
+  return '';
+}
+
+// Busca el valor en un objeto usando coincidencia parcial de clave (case-insensitive)
+function buscarVal(obj, keywords){
+  for(const key of Object.keys(obj)){
+    const kLow = normalizeText(key);
+    for(const kw of keywords){
+      if(kLow.includes(normalizeText(kw))){
+        const v = obj[key];
+        if(v !== undefined && v !== '') return v;
+      }
+    }
+  }
+  return '';
+}
+
+function parseEvalsCSV(csv){
+  const rows = csvToObjs(csv);
+  const out = {};
+  let descartados = 0;
+
+  // ── DEBUG: mostrar todos los headers de evaluaciones en consola ──
+  if(rows.length > 0){
+    console.log('=== HEADERS EVALUACIONES ===');
+    console.log(Object.keys(rows[0]));
+    console.log('=== PRIMERAS 3 FILAS (valores) ===');
+    rows.slice(0,3).forEach((r,i) => console.log(`Fila ${i+2}:`, r));
+  }
+
+  rows.forEach(r=>{
+    // Buscar nómina con la red más amplia posible
+    let nom = '';
+
+    // 1. Buscar por keywords conocidas
+    nom = buscarVal(r, [
+      'nomina del becario',
+      'nomina del evaluado',
+      'nomina evaluado',
+      'nomina (esta en tu credencial',
+      '5. nomina',
+      '2. nomina del evaluado',
+      'numero de nomina',
+      'num nomina',
+      'no. nomina',
+      'nomina becario',
+      'nomina:',
+    ]);
+
+    // 2. Fallback: cualquier columna que contenga "nomina" (sin ser evaluador/jefe)
+    if(!nom){
+      for (const [k, v] of Object.entries(r)){
+        const nk = normalizeText(k);
+        if(nk.includes('nomina') && !nk.includes('evaluador') && !nk.includes('jefe') && !nk.includes('quien evalua')){
+          const val = (v ?? '').toString().trim();
+          if(val){ nom = val; break; }
+        }
+      }
+    }
+
+    // 3. Fallback extremo: buscar columna C (índice 2) — donde Apps Script espera la nómina
+    if(!nom){
+      const vals = Object.values(r);
+      if(vals[2] && vals[2].toString().trim()) nom = vals[2].toString().trim();
+    }
+
+    const nomKey = normalizeNomina(nom);
+    console.log(`Evaluación encontrada — nómina raw: "${nom}" → key: "${nomKey}"`);
+
+    if(!nomKey){ descartados++; return; }
+
+    function p(keywords){
+      return avgByKeywords(r, keywords);
+    }
+
+    const rowOut = {
+      evaluador: buscarVal(r, ['nombre del evaluador', 'evaluador', 'quien evalua', 'nombre evaluador'])||'',
+      fortaleza: buscarVal(r, ['fortaleza','aporte','mayor aporte', 'punto fuerte'])||'',
+      mejora:    buscarVal(r, ['mejorar','area de desarrollo','desarrollo', 'oportunidad', 'aspecto a mejorar'])||'',
+    };
+
+    Object.entries(COMPETENCY_MAP).forEach(([key, keywords])=>{
+      rowOut[key] = p(keywords);
+    });
+
+    out[nomKey] = rowOut;
+  });
+
+  console.log('=== EVALS PARSEADAS (keys) ===', Object.keys(out));
+  if(descartados){ console.warn(`Evaluaciones descartadas por nómina inválida: ${descartados}`); }
+  return out;
+}
+
+
+function avgByKeywords(row, keywords){
+  const vals = [];
+  Object.entries(row).forEach(([k, v])=>{
+    const kl = normalizeText(k);
+    if(keywords.some(kw => kl.includes(normalizeText(kw)))){
+      const n = parseFloat(v);
+      if(!isNaN(n) && n >= 1) vals.push(n);
+    }
+  });
+  return vals.length ? +(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1) : 0;
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════════
+let data = [];
+let evals = {};
+let filtered = [];
+
+function renderAll(){
+  // DEBUG: mostrar nóminas de becarios vs keys de evaluaciones
+  console.log('=== NÓMINAS BECARIOS ===', data.map(b => normalizeNomina(b.nomina)));
+  console.log('=== KEYS EVALUACIONES ===', Object.keys(evals));
+  updateStats();
+  populateFilters();
+  applyFilters();
+}
+
+function updateStats(){
+  const evalCount = data.filter(b=>evals[normalizeNomina(b.nomina)]).length;
+  const dispCount = data.filter(b=>b.dispJornada==='Si').length;
+  const titCount  = data.filter(b=>b.titulacion==='Titulado'||b.titulacion==='En trámite').length;
+  const sedes     = new Set(data.map(b=>b.unidad).filter(Boolean));
+
+  document.getElementById('sTotal').textContent = data.length;
+  document.getElementById('sEval').textContent  = evalCount;
+  document.getElementById('sDisp').textContent  = dispCount;
+  document.getElementById('sTit').textContent   = titCount;
+  document.getElementById('sSedes').textContent = sedes.size;
+
+  // Area pills
+  const counts={};
+  data.forEach(b=>{ if(b.area) counts[b.area]=(counts[b.area]||0)+1; });
+  const pc = document.getElementById('areaPills');
+  pc.innerHTML='';
+  Object.entries(counts).sort((a,b)=>b[1]-a[1]).forEach(([area,cnt])=>{
+    const p=apal(area);
+    const el=document.createElement('span');
+    el.className='apill';
+    el.style.background=p.bg;
+    el.style.color=p.text;
+    el.textContent=`${area.split(' ')[0]} · ${cnt}`;
+    pc.appendChild(el);
+  });
+}
+
+function populateFilters(){
+  const areas=[...new Set(data.map(b=>b.area).filter(Boolean))].sort();
+  const sedes=[...new Set(data.map(b=>b.unidad).filter(Boolean))].sort();
+  const fa=document.getElementById('fArea'); const faCur=fa.value;
+  fa.innerHTML='<option value="">Todas las áreas</option>';
+  areas.forEach(a=>{ const o=document.createElement('option'); o.value=a; o.textContent=a; fa.appendChild(o); });
+  fa.value=faCur;
+  const fs=document.getElementById('fSede'); const fsCur=fs.value;
+  fs.innerHTML='<option value="">Todas las sedes</option>';
+  sedes.forEach(sede=>{ const o=document.createElement('option'); o.value=sede; o.textContent=sede; fs.appendChild(o); });
+  fs.value=fsCur;
+}
+
+function applyFilters(){
+  const q  = (document.getElementById('searchInput').value||'').toLowerCase();
+  const fa = document.getElementById('fArea').value;
+  const fs = document.getElementById('fSede').value;
+  const ft = document.getElementById('fTit').value;
+  const fe = document.getElementById('fEval').value;
+
+  filtered = data.filter(b=>{
+    const mq = !q || [b.nombre,b.area,b.unidad,b.universidad,b.carrera,b.areasInteres]
+      .some(v=>(v||'').toLowerCase().includes(q));
+    const ma = !fa || b.area===fa;
+    const ms = !fs || b.unidad===fs;
+    const mt = !ft || b.titulacion===ft;
+    const ev = evals[normalizeNomina(b.nomina)];
+    const me = !fe || (fe==='si'?!!ev:!ev);
+    return mq&&ma&&ms&&mt&&me;
+  });
+
+  document.getElementById('countLabel').innerHTML=`<strong>${filtered.length}</strong> becarios`;
+  renderCards(filtered);
+}
+
+function renderCards(list){
+  const grid = document.getElementById('mainGrid');
+  if(!list.length){
+    grid.innerHTML=`<div class="empty-state"><div class="ei">🌱</div><p>Sin resultados con esos filtros.</p></div>`;
+    return;
+  }
+  grid.innerHTML='';
+  list.forEach((b,i)=>{
+    const p = apal(b.area);
+    const ev = evals[normalizeNomina(b.nomina)];
+    const hasEval = !!ev;
+    const avgScore = hasEval
+      ? +([ev.comunicacion,ev.equipo,ev.liderazgo,ev.problemas,ev.adaptabilidad,ev.emocional,ev.organizacion,ev.creatividad,ev.resiliencia,ev.compromiso,ev.tecnico].filter(x=>x>0).reduce((a,b,_,arr)=>a+b/arr.length,0)).toFixed(1)
+      : 0;
+
+    const card = document.createElement('div');
+    card.className='card';
+    card.style.animationDelay=`${i*.04}s`;
+
+    // Avatar HTML
+    let avatarHtml;
+    if(b.foto){
+      avatarHtml=`<div class="card-avatar" style="background:${p.bg}"><img src="${b.foto}" onerror="this.style.display='none';this.parentNode.innerHTML='${initials(b.nombre)}'" alt="${b.nombre}"></div>`;
+    } else {
+      avatarHtml=`<div class="card-avatar" style="background:${p.bg};color:${p.text}">${initials(b.nombre)}</div>`;
+    }
+
+    // Disp badges
+    let dispHtml='';
+    if(b.dispJornada==='Si') dispHtml+=`<span class="dbadge green">✓ Disponible</span>`;
+    if(b.dispTraslado==='Si') dispHtml+=`<span class="dbadge blue">✈ Traslado</span>`;
+    if(b.titulacion) dispHtml+=`<span class="dbadge ${b.titulacion==='Titulado'?'pink':'gray'}">${escapeHtml(b.titulacion)}</span>`;
+
+    // Score bar
+    let scoreHtml='';
+    if(hasEval && avgScore>0){
+      scoreHtml=`
+        <div class="score-row">
+          <div class="score-label">Competencias evaluadas <strong>${avgScore}/5</strong></div>
+          <div class="score-track"><div class="score-fill" style="width:${pct(avgScore,5)}%;background:${scoreColor(avgScore)}"></div></div>
+        </div>`;
+    }
+
+    // Action buttons
+    const waNum = (b.telefono||'').replace(/\D/g,'');
+    const waHref = waNum ? sanitizeUrl(`https://wa.me/52${waNum}`) : '#';
+    const mailHref = b.email ? sanitizeUrl(`mailto:${b.email}`, ['mailto:']) : '#';
+    const liHref = b.linkedin ? sanitizeUrl(b.linkedin) : '#';
+
+    card.innerHTML=`
+      <div class="eval-badge ${hasEval?'evaluated':'not-evaluated'}">${hasEval?'✓ Evaluado':'Sin evaluar'}</div>
+      <div class="card-hero">
+        <div class="card-strip" style="background:${p.strip}"></div>
+        ${avatarHtml}
+        <div class="card-name-block">
+          <h3>${escapeHtml(b.nombre)}</h3>
+          <div class="card-sub">${escapeHtml(b.carrera||'')}</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="area-tag" style="background:${p.bg};color:${p.text}">${escapeHtml(b.area||'—')}</span>
+        <div class="info-grid">
+          <div class="info-item"><div class="il">Sede</div><div class="iv">📍 ${escapeHtml(b.unidad||'—')}</div></div>
+          <div class="info-item"><div class="il">Universidad</div><div class="iv">${escapeHtml(b.universidad||'—')}</div></div>
+          <div class="info-item"><div class="il">Jefe directo</div><div class="iv">${escapeHtml(b.jefe||'—')}</div></div>
+          <div class="info-item"><div class="il">Término</div><div class="iv">${escapeHtml(b.termino||'—')}</div></div>
+        </div>
+        ${scoreHtml}
+        <div class="disp-row">${dispHtml}</div>
+      </div>
+      <div class="card-footer">
+        <span class="titulacion-chip">${escapeHtml(b.nomina||'Sin nómina')}</span>
+        <div class="action-btns">
+          <a class="abn wa" href="${waHref}" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </a>
+          <a class="abn mail" href="${mailHref}" title="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          </a>
+          <a class="abn li" href="${liHref}" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <button class="abn profile" onclick="openDetail('${encodeURIComponent(b.nomina||b.nombre)}')" title="Ver perfil">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </button>
+          ${b.cv ? `<a class="abn cv" href="${sanitizeUrl(b.cv)}" target="_blank" rel="noopener noreferrer" title="Ver CV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </a>` : ''}
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ══════════════════════════════════════════════════
+//  MODAL DETALLE
+// ══════════════════════════════════════════════════
+function openDetail(encodedKey){
+  const key = decodeURIComponent(encodedKey || '');
+  const b = data.find(x=>(x.nomina||x.nombre)===key);
+  if(!b) return;
+  const p = apal(b.area);
+  const ev = evals[normalizeNomina(b.nomina)];
+  const hasEval = !!ev;
+
+  // Hero
+  document.getElementById('modalHero').style.background = p.strip;
+  const mavEl = document.getElementById('modalAvatar');
+  if(b.foto){
+    mavEl.innerHTML=`<img src="${sanitizeUrl(b.foto)}" onerror="this.parentNode.innerHTML='${initials(b.nombre)}'" alt="${escapeHtml(b.nombre)}">`;
+    mavEl.style.background=p.bg; mavEl.style.color=p.text;
+  } else {
+    mavEl.innerHTML=initials(b.nombre);
+    mavEl.style.background=p.bg; mavEl.style.color=p.text;
+  }
+
+  const waNum=(b.telefono||'').replace(/\D/g,'');
+
+  // Competencias HTML
+  let compHtml='';
+  if(hasEval){
+    const COMPS=[
+      {k:'comunicacion',  label:'Comunicación'},
+      {k:'equipo',        label:'Trabajo en equipo'},
+      {k:'liderazgo',     label:'Liderazgo'},
+      {k:'problemas',     label:'Resolución de problemas'},
+      {k:'adaptabilidad', label:'Adaptabilidad'},
+      {k:'emocional',     label:'Inteligencia emocional'},
+      {k:'organizacion',  label:'Organización'},
+      {k:'creatividad',   label:'Creatividad e innovación'},
+      {k:'resiliencia',   label:'Resiliencia'},
+      {k:'compromiso',    label:'Compromiso'},
+      {k:'tecnico',       label:'Conocimientos técnicos'},
+    ];
+    compHtml=`<div class="msec">📊 Evaluación de Competencias</div>
+      <div style="margin-bottom:6px;font-size:.75rem;color:var(--muted)">Evaluado por: <strong style="color:var(--ink)">${escapeHtml(ev.evaluador||'—')}</strong></div>
+      <div class="comp-grid">
+      ${COMPS.map(c=>{
+        const val=ev[c.k]||0;
+        if(!val) return '';
+        return `<div class="comp-row">
+          <div class="comp-name">${c.label} <span style="color:${scoreColor(val)}">${val}/5</span></div>
+          <div class="comp-track"><div class="comp-fill" style="width:${pct(val,5)}%;background:${scoreColor(val)}"></div></div>
+        </div>`;
+      }).join('')}
+      </div>`;
+    if(ev.fortaleza) compHtml+=`<div class="msec">💪 Mayor fortaleza</div><div class="note-card green">${escapeHtml(ev.fortaleza)}</div>`;
+    if(ev.mejora)    compHtml+=`<div class="msec">📈 Área de mejora prioritaria</div><div class="note-card pink">${escapeHtml(ev.mejora)}</div>`;
+  } else {
+    compHtml=`<div class="msec">Evaluación de Competencias</div>
+      <div style="text-align:center;padding:20px;background:var(--gray);border-radius:10px;color:var(--muted);font-size:.85rem">
+        ⏳ Este becario aún no ha sido evaluado
+      </div>`;
+  }
+
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-title">
+      <h2>${escapeHtml(b.nombre)}</h2>
+      <div class="msub">${escapeHtml(b.carrera||'')} · ${escapeHtml(b.universidad||'')}</div>
+    </div>
+    <div class="modal-badges">
+      <span class="area-tag" style="background:${p.bg};color:${p.text}">${escapeHtml(b.area||'—')}</span>
+      ${b.dispJornada==='Si'?`<span class="dbadge green">✓ Disponible</span>`:''}
+      ${b.dispTraslado==='Si'?`<span class="dbadge blue">✈ Acepta traslado</span>`:''}
+      ${b.titulacion?`<span class="dbadge ${b.titulacion==='Titulado'?'pink':'gray'}">${escapeHtml(b.titulacion)}</span>`:''}
+      <span class="eval-badge ${hasEval?'evaluated':'not-evaluated'}">${hasEval?'✓ Evaluado':'Sin evaluar'}</span>
+    </div>
+    <div class="modal-actions">
+      ${waNum?`<a class="ma-btn wa" href="${sanitizeUrl(`https://wa.me/52${waNum}`)}" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>`:''}
+      ${b.email?`<a class="ma-btn mail" href="${sanitizeUrl(`mailto:${b.email}`, ['mailto:'])}">✉ ${escapeHtml(b.email)}</a>`:''}
+      ${b.linkedin?`<a class="ma-btn li" href="${sanitizeUrl(b.linkedin)}" target="_blank" rel="noopener noreferrer">in LinkedIn</a>`:''}
+      ${b.cv?`<a class="ma-btn cv" href="${sanitizeUrl(b.cv)}" target="_blank" rel="noopener noreferrer">📄 Ver CV</a>`:''}
+    </div>
+
+    <div class="msec">Información general</div>
+    <div class="detail-grid">
+      <div class="di"><div class="dl">Nómina</div><div class="dv">${escapeHtml(b.nomina||'—')}</div></div>
+      <div class="di"><div class="dl">Género</div><div class="dv">${escapeHtml(b.genero||'—')}</div></div>
+      <div class="di"><div class="dl">Sede / Unidad</div><div class="dv">📍 ${escapeHtml(b.unidad||'—')}</div></div>
+      <div class="di"><div class="dl">Jefe directo</div><div class="dv">${escapeHtml(b.jefe||'—')}</div></div>
+      <div class="di"><div class="dl">Ingreso</div><div class="dv">${escapeHtml(b.ingreso||'—')}</div></div>
+      <div class="di"><div class="dl">Término</div><div class="dv">${escapeHtml(b.termino||'—')}</div></div>
+      <div class="di" style="grid-column:1/-1"><div class="dl">Áreas de interés</div><div class="dv">${escapeHtml(b.areasInteres||'—')}</div></div>
+    </div>
+
+    ${b.logros?`<div class="msec">🏆 Logros principales</div><div class="note-card">${escapeHtml(b.logros)}</div>`:''}
+    ${b.herramientas?`<div class="msec">🔧 Herramientas dominadas</div><div class="note-card">${escapeHtml(b.herramientas)}</div>`:''}
+    ${b.fortalezas?`<div class="msec">💬 Fortalezas (feedback jefe)</div><div class="note-card green">${escapeHtml(b.fortalezas)}</div>`:''}
+    ${b.oportunidades?`<div class="msec">📌 Áreas de oportunidad (feedback jefe)</div><div class="note-card pink">${escapeHtml(b.oportunidades)}</div>`:''}
+
+    ${compHtml}
+
+    <div style="display:flex;justify-content:flex-end;margin-top:20px">
+      <button class="ma-btn close" onclick="closeModal()">Cerrar</button>
+    </div>`;
+
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+document.getElementById('detailOverlay').addEventListener('click', e=>{
+  if(e.target===document.getElementById('detailOverlay')) closeModal();
+});
+
+// ══════════════════════════════════════════════════
+//  SAMPLE DATA (datos de demostración)
+// ══════════════════════════════════════════════════
+const SAMPLE = [];
+const SAMPLE_EVALS = {};
+</script>
+</body>
+</html>
