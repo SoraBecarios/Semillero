@@ -1053,8 +1053,8 @@ function parseEvalsCSV(csv){
   if(rows.length > 0){
     console.log('=== HEADERS EVALUACIONES ===');
     console.log(Object.keys(rows[0]));
-    console.log('=== PRIMERAS 3 FILAS (valores) ===');
-    rows.slice(0,3).forEach((r,i) => console.log(`Fila ${i+2}:`, r));
+    console.log('=== FILA 2 COMPLETA (keys y valores) ===');
+    Object.entries(rows[0]).forEach(([k,v]) => console.log(`  "${k}" → "${v}"`));
   }
 
   rows.forEach(r=>{
@@ -1063,6 +1063,7 @@ function parseEvalsCSV(csv){
 
     // 1. Buscar por keywords conocidas
     nom = buscarVal(r, [
+      '5. nomina del becario',
       'nomina del becario',
       'nomina del evaluado',
       'nomina evaluado',
