@@ -941,17 +941,17 @@ function escapeHtml(val){
 }
 
 const COMPETENCY_MAP = {
-  comunicacion:  ['expresa ideas','comunica oralmente','escucha activ','transmite ideas','comunicacion'],
-  equipo:        ['colabora eficaz','participa proactiv','actitud respetuosa','trabajo en equipo','colabora'],
-  liderazgo:     ['muestra iniciativa','motiva a otros','es un referente','liderazgo','autogestion'],
-  problemas:     ['identifica rapidamente','propone soluciones','analiza las situaciones','resolucion de problemas','problema'],
-  adaptabilidad: ['se adapta con facilidad','aprende rapidamente nuevas','muestra disposicion','adaptabilidad','aprendizaje'],
-  emocional:     ['maneja el estres','reconoce y gestiona','demuestra empatia','inteligencia emocional','emocional'],
-  organizacion:  ['planifica su trabajo','entrega las tareas','utiliza su tiempo','organizacion','tiempo'],
-  creatividad:   ['genera ideas originales','sugiere alternativas','abierto a experimentar','creatividad','innovacion'],
-  resiliencia:   ['mantiene la calma','se recupera rapidamente','persiste en las tareas','resiliencia'],
-  compromiso:    ['sentido de responsabilidad','toma la iniciativa','se identifica','compromiso','proactividad'],
-  tecnico:       ['transformar datos','comparte proactivamente su conocimiento','utiliza los errores','conocimiento tecnico','tecnico'],
+  comunicacion:  ['comunicacion','transmite ideas','escucha instrucciones','oral y escrita'],
+  equipo:        ['trabajo en equipo','colabora activamente','disposicion para ayudar','relaciones profesionales'],
+  liderazgo:     ['liderazgo','autogestion','muestra iniciativa','actua con autonomia'],
+  problemas:     ['resolucion de problemas','problema','propone mejoras'],
+  adaptabilidad: ['adaptabilidad','aprendizaje','aprende rapido','actitud positiva cuando cambian'],
+  emocional:     ['inteligencia emocional','gestiona adecuadamente el estres','trato empatico','reacciona con madurez'],
+  organizacion:  ['organizacion y tiempo','planifica sus actividades','plazos pactados','tiempo'],
+  creatividad:   ['creatividad e innovacion','aporta ideas','cuestiona procesos','formas mas eficientes'],
+  resiliencia:   ['resiliencia','mantiene el enfoque','aprendiendo de sus errores','no desmotivarse'],
+  compromiso:    ['compromiso','etica','responsabilidad','puntualidad','alineacion'],
+  tecnico:       ['conocimientos tecnicos','conocimientos academicos','reportes','analisis','entregables'],
 };
 
 function normalizeText(s){
@@ -1077,11 +1077,13 @@ function parseEvalsCSV(csv){
       'nomina:',
     ]);
 
-    // 2. Fallback: cualquier columna que contenga "nomina" (sin ser evaluador/jefe)
+    // 2. Fallback: cualquier columna que contenga "nomina" y "becario" o simplemente "nomina" sin ser del evaluador
     if(!nom){
       for (const [k, v] of Object.entries(r)){
         const nk = normalizeText(k);
-        if(nk.includes('nomina') && !nk.includes('evaluador') && !nk.includes('jefe') && !nk.includes('quien evalua')){
+        const esBecario = nk.includes('becario') || nk.includes('credencial');
+        const esEvaluador = nk.includes('evaluador') || nk.includes('jefe') || nk.includes('quien evalua') || nk.includes('2. nomina');
+        if(nk.includes('nomina') && (esBecario || !esEvaluador)){
           const val = (v ?? '').toString().trim();
           if(val){ nom = val; break; }
         }
@@ -1104,9 +1106,9 @@ function parseEvalsCSV(csv){
     }
 
     const rowOut = {
-      evaluador: buscarVal(r, ['nombre del evaluador', 'evaluador', 'quien evalua', 'nombre evaluador'])||'',
-      fortaleza: buscarVal(r, ['fortaleza','aporte','mayor aporte', 'punto fuerte'])||'',
-      mejora:    buscarVal(r, ['mejorar','area de desarrollo','desarrollo', 'oportunidad', 'aspecto a mejorar'])||'',
+      evaluador: buscarVal(r, ['nombre del evaluador', '1. nombre del evaluador', 'evaluador', 'quien evalua'])||'',
+      fortaleza: buscarVal(r, ['mejor cualidad','cualidad del becario','fortaleza','aporte','mayor aporte'])||'',
+      mejora:    buscarVal(r, ['area donde el becario','area donde debe mejorar','mejorar','area de desarrollo','oportunidad'])||'',
     };
 
     Object.entries(COMPETENCY_MAP).forEach(([key, keywords])=>{
